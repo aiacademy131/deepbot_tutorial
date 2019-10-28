@@ -112,33 +112,36 @@ window.onload = function() {
       var type = 'outgoing-message'
       add_message(msg, type)
 
-      $.ajax({
-          url: '/message',
-          type: 'POST',
-          dataType: 'json',
-          contentType: 'application/json',
-          data: JSON.stringify({content: {
-              id: 'user_token',
-                  message:{
-                      text: msg
-                  }
-              }}),
-          success: function(res) {
-              try {
-                content   = res.content
-                text      = content.message.text
+      utterance.text = msg
+      synthesis.speak(utterance)
 
-                utterance.text = text
-                synthesis.speak(utterance)
+      // $.ajax({
+      //     url: '/message',
+      //     type: 'POST',
+      //     dataType: 'json',
+      //     contentType: 'application/json',
+      //     data: JSON.stringify({content: {
+      //         id: 'user_token',
+      //             message:{
+      //                 text: msg
+      //             }
+      //         }}),
+      //     success: function(res) {
+      //         try {
+      //           content   = res.content
+      //           text      = content.message.text
 
-                add_message(msg)
+      //           utterance.text = text
+      //           synthesis.speak(utterance)
 
-              } catch(e) {
-                utterance.text = "이해를 하지 못했어요."
-                synthesis.speak(utterance)
-              }
-          }
-      })
+      //           add_message(msg)
+
+      //         } catch(e) {
+      //           utterance.text = "이해를 하지 못했어요."
+      //           synthesis.speak(utterance)
+      //         }
+      //     }
+      // })
     }
     function add_message(message, type) {
         var chat_body = $('.layout .content .chat .chat-body');
